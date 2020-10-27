@@ -14,9 +14,7 @@
 (function () {
 	"use strict";
 
-	/**
-	 * UPI global variables
-	 */
+	// UPI global variables
 	[
 		UPI, // duh
 		uWindow, // UnsafeWindow but it deals with grant none

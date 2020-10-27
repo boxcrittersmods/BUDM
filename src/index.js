@@ -31,6 +31,7 @@ let UPI;
 		},
 	});
 
+	/*@min url https://github.com/SArpnt/EventHandler/raw/master/script.js @*/
 	/*@ Module.js @*/
 
 	UPI = new Module/*@ UPIModuleInfo.js @*/;

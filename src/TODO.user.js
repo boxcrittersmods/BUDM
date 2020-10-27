@@ -1,4 +1,3 @@
-
 /**
  * @file UPI Userscript
  * @author TumbleGamer SArpnt
@@ -6,16 +5,12 @@
  * @licence Apache-2.0
  */
 
-
-(function () {
-	'use strict';
-	let blacklist = [ // invalid ids
-		"mods",
-		"modInfo",
-		"name",
-		"id",
-		"GM_info",
-		"parent",
-		/*any parent module,*/
-	];
-})();
+let blacklist = [ // invalid ids
+	"mods",
+	"modInfo",
+	"name",
+	"id",
+	"GM_info",
+	"parent",
+	/*any parent module,*/
+];

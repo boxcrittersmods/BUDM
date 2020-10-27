@@ -9,6 +9,7 @@
 // @match        https://boxcritters.com/play/index.html?*
 // @match        https://boxcritters.com/play/index.html#*
 // @run-at       document-start
+// @require      https://github.com/SArpnt/EventHandler/raw/master/script.js
 // ==/UserScript==
 
 // TODO
@@ -44,6 +45,7 @@ let UPI;
 		},
 	});
 
+	/*@min url https://github.com/SArpnt/EventHandler/raw/master/script.js @*/
 	class Module extends EventHandler { // TODO: get EventHandler from my github so it can be compiled into this
 		/**
 		 * Creates a new Module

@@ -9,6 +9,7 @@
 // @match        https://boxcritters.com/play/index.html?*
 // @match        https://boxcritters.com/play/index.html#*
 // @run-at       document-start
+// @require      https://github.com/SArpnt/EventHandler/raw/master/script.js
 // ==/UserScript==
 
 // TODO
