@@ -1,7 +1,9 @@
 ({
-	name: "United Program Interface",
-	author: "SArpnt and TumbleGamer",
-	//version: ,
-	id: "UPI",
-	abbrev: "UPI",
+	overrides: {
+		name: "United Program Interface",
+		author: "SArpnt and TumbleGamer",
+		//version: ,
+		id: "UPI",
+		abbrev: "UPI",
+	}
 })
