@@ -74,7 +74,7 @@ class Module extends EventHandler { // TODO: get EventHandler from my github so 
 			this.modInfo.abbrevList = [this.modInfo.abbrev];
 		}
 
-		this.info(`${this.modInfo.name} by ${this.modinfo.author}`);
+		this.info(this.modInfo.name + (this.modInfo.author ? ` by ${this.modInfo.author}` : ``));
 	}
 
 	/**
@@ -164,7 +164,7 @@ class Module extends EventHandler { // TODO: get EventHandler from my github so 
 	"error",
 ].forEach(e =>
 	Module.prototype[e] = function (...p) {
-		console[e](`[${this.abbrevList.join('.')}]`, ...p);
+		console[e](`[${this.modInfo.abbrevList.join('.')}]`, ...p);
 		return p[0];
 	}
 );

@@ -122,7 +122,7 @@ let UPI;
 				this.modInfo.abbrevList = [this.modInfo.abbrev];
 			}
 	
-			this.info(`${this.modInfo.name} by ${this.modinfo.author}`);
+			this.info(this.modInfo.name + (this.modInfo.author ? ` by ${this.modInfo.author}` : ``));
 		}
 	
 		/**
@@ -212,7 +212,7 @@ let UPI;
 		"error",
 	].forEach(e =>
 		Module.prototype[e] = function (...p) {
-			console[e](`[${this.abbrevList.join('.')}]`, ...p);
+			console[e](`[${this.modInfo.abbrevList.join('.')}]`, ...p);
 			return p[0];
 		}
 	);
@@ -230,7 +230,7 @@ let UPI;
 
 	/**
 	 * TODO:
-	 * parse header
-	 * make module from header info
+	 * handle requirements
+	 * handle userscript
 	 */
 })();

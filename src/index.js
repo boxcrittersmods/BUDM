@@ -39,7 +39,7 @@ let UPI;
 
 	/**
 	 * TODO:
-	 * parse header
-	 * make module from header info
+	 * handle requirements
+	 * handle userscript
 	 */
 })();
