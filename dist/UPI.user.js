@@ -47,54 +47,61 @@ let UPI;
 	class Module extends EventHandler { // TODO: get EventHandler from my github so it can be compiled into this
 		/**
 		 * Creates a new Module
-		 * @param {Object} options
-		 * @param {String} options.name Name of the module
-		 * @param {String} [options.author] Author of the module
-		 * @param {String} [options.version] Version of the module - optional unless global (global is a flag that will be added later)
-		 * @param {String} options.id ID of the module - optional but reccomended
-		 * @param {String} [options.abbrev] Abbreviation of the module - optional but reccomended
-		 * @param {Module} [options.parent] Parent of the module - internal, should not be used
-		 * @param {String} [options.scriptSource] The script for the module - internal, should not be used
+		 * @param {Module} [options.parent] Parent of the module
+		 * @param {String} [GM_info] GM_info for the module
+		 * @param {String} [options.scriptSource] The script for the module
 		 */
-		constructor({ name, author, version, id, abbrev, GM_info, parent, scriptSource }) {
-			this.parent = parent; // done
-			this.modInfo = {}; // done
-			this.modInfo.name = name;
-			this.modInfo.version = version;
+		constructor({ parent, GM_info, scriptSource, }) {
+			this.modInfo = {};
+	
+			if (this.parent) // if no value key isn't set
+				this.parent = parent;
+	
 			this.modInfo.scriptSource = scriptSource;
+	
 			if (GM_info) {
 				if (typeof GM_info != "object")
-					throw new TypeError(`Invalid GM_info!`);
+					throw new TypeError(`Invalid GM_info!`); // TODO: proper error handling (doesn't break all of UPI)
 				if (!GM_info)
 					throw new TypeError(`Invalid GM_info!`);
 	
 				this.modInfo.GM_info = GM_info;
 	
-				if (!this.modInfo.scriptSource)
-					this.modInfo.scriptSource = GM_info.scriptSource;
+				if (!this.modInfo.scriptSource) this.modInfo.scriptSource = GM_info.scriptSource;
+				if (!this.modInfo.name) this.modInfo.name = this.modInfo.GM_info.script.name;
+				if (!this.modInfo.version) this.modInfo.version = this.modInfo.GM_info.script.name;
 			}
-			if (!scriptText) throw `No Script Text!`;
-			if (!this.modInfo.name) this.modInfo.name = this.modInfo.GM_info.script.name;
-			if (!this.modInfo.version) this.modInfo.version = this.modInfo.GM_info.script.name;
+	
+			if (!scriptSource) throw `No Script Source!`;
+			this.modInfo.header = Module.parseScriptHeader(this.modInfo.scriptSource);
+	
+			this.modInfo.name = this.modInfo.header.name;
 			if (!this.modInfo.name) throw `No module name!`;
-			if (!this.modInfo.version) throw `No module version!`;
-			this.modInfo.id = id || Module.camelize(name);
-			this.modInfo.abbrev = abbrev || name
-				.split(" ")
-				.map(word => word[0].toUpperCase())
-				.join("");
+			this.modInfo.author = this.modInfo.header.author;
+			this.modInfo.version = this.modInfo.header.version;
+			//if (false && !this.modInfo.version) throw `No module version!`; // TODO: false should be global flag
+	
+			this.modInfo.id = this.modInfo.header.UPI.id || Module.camelize(this.modInfo.name);
+			this.modInfo.abbrev = this.modInfo.header.UPI.abbrev ||
+				this.modInfo.name
+					.split(" ")
+					.map(word => word[0].toUpperCase())
+					.join("");
+	
+			if (this.modInfo.header.UPI.require)
+				this.modInfo.require = this.modInfo.header.UPI.require.split(/\s*,\s*/);
+	
 	
 			if (this.parent) {
+				this.parent[this.modInfo.id] = this;
 				this.modInfo.idList = this.parent.abbrevList.concat([this.modInfo.id]);
 				this.modInfo.abbrevList = this.parent.abbrevList.concat([this.modInfo.abbrev]);
-				this.parent[this.modInfo.id] = this;
 			} else {
 				this.modInfo.idList = [this.modInfo.id];
 				this.modInfo.abbrevList = [this.modInfo.abbrev];
 			}
 	
-			//TODO: change this later
-			//if (userscriptHeader.logModName) this.info(`${this.modInfo.name} by ${this.modinfo.author}`)
+			this.info(`${this.modInfo.name} by ${this.modinfo.author}`);
 		}
 	
 		/**
@@ -109,11 +116,11 @@ let UPI;
 		}
 	
 		static parseScriptHeader(scriptText) {
-			scriptText
+			let arrayForm = scriptText
 				.match(/(?:\/\/\s*)?==UserScript==([\S\s]*)==\/UserScript==/)[1] // get header
-				.split(/\n\s*\/\//g)
-				.map(e => e.trim()) // trim whitespace from all strings
-				.filter(e => e) // remove empty strings
+				.split(/\n\s*\/\//g) // split into line array
+				.map(e => e.trim()) // trim whitespace from all lines
+				.filter(e => e) // remove empty lines
 				.map(e => {
 					let m = e.match(/\s+/); // get first whitespace so string can be split by it
 					return [
@@ -121,6 +128,23 @@ let UPI;
 						e.slice(m.index + m[0].length) // value
 					];
 				});
+	
+			mod.debug(`header arrayForm:`, arrayForm);
+	
+			let objForm = {};
+			for (let [path, v] of arrayForm) {
+				let fKey = path.pop(),
+					cObj = objForm;
+				for (let b of path) {
+					if (b in cObj && typeof cObj[b] != "object")
+						throw `Path ${path.join('.')} has existing value at ${b}`;
+					cObj = cObj[b];
+				}
+				if (fKey in cObj)
+					throw `Value ${path.join('.')}.${key} already exists`;
+				cObj[fKey] = v;
+			}
+			return mod.debug(`header objForm:`, objForm);
 		}
 	};
 	
@@ -167,7 +191,7 @@ let UPI;
 		"error",
 	].forEach(e =>
 		Module.prototype[e] = function (...p) {
-			console[e](`[${this.abbrevList}]`, ...p);
+			console[e](`[${this.abbrevList.join('.')}]`, ...p);
 			return p[0];
 		}
 	);
@@ -186,4 +210,4 @@ let UPI;
 	 * parse header
 	 * make module from header info
 	 */
-})();/**/
+})();

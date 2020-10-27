@@ -7,10 +7,11 @@
 // @match        https://boxcritters.com/play/index.html?*
 // @match        https://boxcritters.com/play/index.html#*
 // @require      file:///D:/GitHub/UPI/dist/UPI.user.js
-// UPI.modules   simpleModule
+// UPI.require   simpleModule
 // UPI.id        simpleMod
 // UPI.abbrev    SM
 // ==/UserScript==
+
 (function () {
 	"use strict";
 	

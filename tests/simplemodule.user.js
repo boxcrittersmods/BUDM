@@ -18,9 +18,9 @@
 	 * UPI global variables
 	 */
 	[
-		UPI, // already done
+		UPI, // duh
 		uWindow, // UnsafeWindow but it deals with grant none
-		mod, // the module class, has already been set up by UPI
+		mod, // the module class
 	];
 
 	mod.testFunction = function (...vals) {
