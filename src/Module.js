@@ -8,14 +8,10 @@
  * @external EventHandler
  * @see {@link https://github.com/SArpnt/EventHandler}
  */
-/**
- * Module class
- * @class
- * @extends EventHandler
- */
 class Module extends EventHandler {
 	/**
 	 * Creates a new Module
+	 * @extends EventHandler
 	 * @param {Object} options
 	 * @param {Module} [options.parent] Parent of the module
 	 * @param {String} [options.GM_info] GM_info for the module
@@ -26,6 +22,10 @@ class Module extends EventHandler {
 	 * @param {String} [options.overrides.version] Version of the module - optional unless global (global is a flag that will be added later)
 	 * @param {String} options.overrides.id ID of the module - optional but reccomended
 	 * @param {String} [options.overrides.abbrev] Abbreviation of the module - optional but reccomended
+	 * 
+	 * @throws {TypeError} There must be a GM_info that is not undefined.
+	 * @throws {"No Script Source!"} The script source is required.
+	 * @throws {"No module name!"} The module name is required.
 	 */
 	constructor({ parent, GM_info, scriptSource, overrides, }) {
 		super();
@@ -102,11 +102,14 @@ class Module extends EventHandler {
 		});
 	}
 	/**
-	 * parses a scriprs header
-	 * @private
+	 * parses a script's header
 	 * @param {String} scriptText Script text to parse
+	 * 
+	 * @throws {"Value K already exists"} K cannot already exist
+	 * @throws {"Path has existing value"} Path cannot have an existing value
+	 * @throws {"Value already exists"} Some key in the path cannot already exist
 	 */
-	static parseScriptHeader(scriptText) {
+	static parseScriptHeader(scriptText, debug) {
 		let arrayForm = scriptText
 			.match(/(?:\/\/\s*)?==UserScript==([\S\s]*)==\/UserScript==/)[1] // get header
 			.split(/\n\s*\/\//g) // split into line array
@@ -120,7 +123,7 @@ class Module extends EventHandler {
 				];
 			});
 
-		console.debug(`header arrayForm:`, arrayForm);
+		if (debug) debug(`header arrayForm:`, arrayForm);
 
 		let objForm = {};
 		for (let [path, v] of arrayForm) {
@@ -146,7 +149,7 @@ class Module extends EventHandler {
 				cObj[fKey] = v;
 			}
 		}
-		console.debug(`header objForm:`, objForm);
+		if (debug) debug(`header objForm:`, objForm);
 		return objForm;
 	}
 };

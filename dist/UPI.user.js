@@ -58,7 +58,7 @@ let UPI;
 	 */
 	/**
 	 * Module class
-	 * @class
+	 * @class UPI#Module
 	 * @extends EventHandler
 	 */
 	class Module extends EventHandler {
@@ -74,6 +74,8 @@ let UPI;
 		 * @param {String} [options.overrides.version] Version of the module - optional unless global (global is a flag that will be added later)
 		 * @param {String} options.overrides.id ID of the module - optional but reccomended
 		 * @param {String} [options.overrides.abbrev] Abbreviation of the module - optional but reccomended
+		 * 
+		 * @throws Will throw if there is no script source
 		 */
 		constructor({ parent, GM_info, scriptSource, overrides, }) {
 			super();
@@ -154,7 +156,7 @@ let UPI;
 		 * @private
 		 * @param {String} scriptText Script text to parse
 		 */
-		static parseScriptHeader(scriptText) {
+		static parseScriptHeader(scriptText, debug) {
 			let arrayForm = scriptText
 				.match(/(?:\/\/\s*)?==UserScript==([\S\s]*)==\/UserScript==/)[1] // get header
 				.split(/\n\s*\/\//g) // split into line array
@@ -168,7 +170,7 @@ let UPI;
 					];
 				});
 	
-			console.debug(`header arrayForm:`, arrayForm);
+			if (debug) debug(`header arrayForm:`, arrayForm);
 	
 			let objForm = {};
 			for (let [path, v] of arrayForm) {
@@ -194,7 +196,7 @@ let UPI;
 					cObj[fKey] = v;
 				}
 			}
-			console.debug(`header objForm:`, objForm);
+			if (debug) debug(`header objForm:`, objForm);
 			return objForm;
 		}
 	};

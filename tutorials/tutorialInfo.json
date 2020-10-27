@@ -1,9 +1,5 @@
 {
 	"gettingStarted": {
-		"title": "Getting Started",
-		"children": ["creating-moduals"]
-	},
-	"creating-moduals":{
-		"title":"How to create and manage Modules"
+		"title": "Getting Started"
 	}
 }
