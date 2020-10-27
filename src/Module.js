@@ -8,15 +8,30 @@ class Module extends EventHandler { // TODO: get EventHandler from my github so 
 	 * @param {String} options.id ID of the module - optional but reccomended
 	 * @param {String} [options.abbrev] Abbreviation of the module - optional but reccomended
 	 * @param {Module} [options.parent] Parent of the module - internal, should not be used
-	 * @param {String} [options.scriptText] The script for the module - internal, should not be used
+	 * @param {String} [options.scriptSource] The script for the module - internal, should not be used
 	 */
-	constructor({ name, author, version, id, abbrev, parent, scriptText }) {
-		if(typeof scriptText == "function") scriptText = scriptText.toString();
+	constructor({ name, author, version, id, abbrev, GM_info, parent, scriptSource }) {
 		this.parent = parent; // done
 		this.modInfo = {}; // done
-		this.modInfo.GM_info = ; 
-		this.modInfo.name = name || this.modInfo.GM_info.script.name || throw `No module name!`;
-		this.modInfo.version = version || this.modInfo.GM_info.script.version || throw `No version!`;
+		this.modInfo.name = name;
+		this.modInfo.version = version;
+		this.modInfo.scriptSource = scriptSource;
+		if (GM_info) {
+			if (typeof GM_info != "object")
+				throw new TypeError(`Invalid GM_info!`);
+			if (!GM_info)
+				throw new TypeError(`Invalid GM_info!`);
+
+			this.modInfo.GM_info = GM_info;
+
+			if (!this.modInfo.scriptSource)
+				this.modInfo.scriptSource = GM_info.scriptSource;
+		}
+		if (!scriptText) throw `No Script Text!`;
+		if (!this.modInfo.name) this.modInfo.name = this.modInfo.GM_info.script.name;
+		if (!this.modInfo.version) this.modInfo.version = this.modInfo.GM_info.script.name;
+		if (!this.modInfo.name) throw `No module name!`;
+		if (!this.modInfo.version) throw `No module version!`;
 		this.modInfo.id = id || Module.camelize(name);
 		this.modInfo.abbrev = abbrev || name
 			.split(" ")
@@ -45,6 +60,21 @@ class Module extends EventHandler { // TODO: get EventHandler from my github so 
 			if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
 			return index === 0 ? match.toLowerCase() : match.toUpperCase();
 		});
+	}
+
+	static parseScriptHeader(scriptText) {
+		scriptText
+			.match(/(?:\/\/\s*)?==UserScript==([\S\s]*)==\/UserScript==/)[1] // get header
+			.split(/\n\s*\/\//g)
+			.map(e => e.trim()) // trim whitespace from all strings
+			.filter(e => e) // remove empty strings
+			.map(e => {
+				let m = e.match(/\s+/); // get first whitespace so string can be split by it
+				return [
+					e.slice(0, m.index).split('.'), // key, split by .
+					e.slice(m.index + m[0].length) // value
+				];
+			});
 	}
 };
 

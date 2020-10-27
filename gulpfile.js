@@ -1,31 +1,32 @@
 "use strict";
 const gulp = require("gulp"),
-	plumber = require("gulp-plumber");
-concat = require("gulp-concat"),
+	plumber = require("gulp-plumber"),
 	terser = require("gulp-terser"),
-	include = require("gulp-include");
+	rename = require("gulp-rename"),
+	replace = require("gulp-replace"),
+	fs = require("fs"),
 
+	startingFile = "src/index.js",
+	distFolder = "dist",
 
-let startingFile = "src/index.js",
-	distName = "UPI.user.js";
-distFolder = "dist";
-
+	includeRegex = /(?<=^([ \t]*).*?)\/\*@\s*(.*?)\s*@\*\//gm,
+	includeFunc = function (match, indent, filename) {
+		return fs.readFileSync(`src/${filename}`, "utf8")
+			.replace(includeRegex, includeFunc)
+			.replace(/\n/g, `\n${indent}`);
+	};
 
 function buildJS() {
-	return guilp.src([startingFile])
-		.pipe(plumber())//fixes issue with Node Streams piping
-		.pipe(include({
-			extensions: 'js',
-			hardFail: true,
-			separateInputs: true,
-			includePaths: [
-				__dirname + '/src'
-			]
-		}))//add includes
-		.pipe(terser({ warnings: "verbose" }))//Minfifies
-		//propably not needed since we have one input file
-		.pipe(concat(distName))//Joins the files
-		.pipe(gulp.dest(distFolder));//outputs
+	return gulp.src([startingFile])
+		//.pipe(plumber()) // fixes issue with node streams piping
+		.pipe(replace(includeRegex, includeFunc))
+		.pipe(rename("UPI.user.js"))
+		.pipe(gulp.dest(distFolder)) // outputs
+		.pipe(terser({
+			warnings: "verbose",
+		})) // minifies
+		.pipe(rename("UPI.min.js"))
+		.pipe(gulp.dest(distFolder));
 }
 
 gulp.task("build", buildJS);

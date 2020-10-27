@@ -1,36 +1,44 @@
-//=require header.js
+/*@ header.js @*/
 
-let uWindow = typeof unsafeWindow != 'undefined' ? unsafeWindow : window;
-let UPI = {
-	modInfo: {
-		name: "Universal Program Interface",
-		id: "UPI",
-		abbrev: "UPI",
-	},
-	exampleSubmodule: { // mods can also be modules
-		modInfo: {
-			name: "Example Submodule",
-			id: "exampleSubmodule", // used as object key
-			abbrev: "ES",
-		},
-	},
-};
+const uWindow = typeof unsafeWindow != 'undefined' ? unsafeWindow : window;
+let UPI;
 (function () {
 	"use strict";
-
-	let moduleVars = {
-		
-	}
+	let exposedVars = {
+		uWindow,
+		UPI,
+	};
 
 	if (window.UPI) {
-		delete window.UPI;
+		for (let i in exposedVars)
+			delete window[i];
 		throw `UPI variables are global! please scope/sandbox it`;
 	}
 
-	//=require Module.js
+	// Module class structure
+	({
+		modInfo: {
+			name: "Universal Program Interface",
+			id: "UPI",
+			abbrev: "UPI",
+		},
+		exampleSubmodule: { // mods can also be modules
+			modInfo: {
+				name: "Example Submodule",
+				id: "exampleSubmodule", // used as object key
+				abbrev: "ES",
+			},
+		},
+	});
+
+	/*@ Module.js @*/
+
+	UPI = new Module/*@ UPIModuleInfo.js @*/;
+	UPI.info(UPI);
+
+	/**
+	 * TODO:
+	 * parse header
+	 * make module from header info
+	 */
 })();
-
-//A file that is included with require will only be included if it has not been included before.
-// Files included with include will always be included.
-
-//TODO: test documentation and build system
