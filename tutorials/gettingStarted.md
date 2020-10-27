@@ -1,24 +1,30 @@
-# Getting Started
-To get started you need to first require UPI in your userscript header
+This tutorial assumes you are making a mod, if you are making a module, the process is still the same.
+
+### Setup
+To set up UPI, require it in your userscript header
 ```js
 // @require      https://cdn.jsdelivr.net/gh/boxcrittersmods/UPI@latest/dist/UPI.min.js
 ```
-
-Once you have done that you will also need to setup the configoration of UPI also in the userscript header. (`.abbrev` is optional)
+tumble can you make this go to the latest github release directly
+jsdelivr doesn't update properly
+it does update
+i have had issues with it not upadating literally every time i have tried to use it
+it takes multiple days to update unless i specify a commit
+i can't wait multiple days to fix large issues
+### Configuration
+Configuration is done by adding parameters in the userscript header.
+By default all options are automatically filled out.
 ```js
-// UPI.id        simpleMod
-// UPI.abbrev    SM
+// UPI.id        exampleMod
+// UPI.abbrev    EM
+// UPI.deps      moduleOne, moduleTwo, moduleThree
 ```
-## Global Vriables
-once you have done all that you will then be treated to 3 global variables
-- `UPI` - This entire library
-- `uWindow` - a reliable refererence to the window object that deals with things like `@grant none`
-- `mod` - this object represents your mod/modual and it also acts like the `module.exports` from node.js where what ever you assign to it, any mods that depend on your modual will be able to access.
+- `.id` - The name of your mod in camelText
+- `.abbrev` - An abbreviation of the name of your mod
+- `.deps` - A list of the modules neccecary for your mod
 
-## Dependencies
-want to use an bc modding api that someone else made.
-add this to your userscript header
-```js
-// UPI.deps      [modIds]
-```
-`modIDs`  - a comma sepperated list of the ids of mods you would like to depend on
+### Usage
+These variables are used to interface with UPI:
+- *[Module](/Module.html)* `UPI` - The entire UPI library.
+- *[Window](https://developer.mozilla.org/en-US/docs/Web/API/Window)* `uWindow` - a reliable refererence to the window object (to deal with userscript sandboxing)
+- *[Module](/Module.html)* `mod` - This object represents your mod, it's the way all other mods/modules access your mod. It contains information about your mod, any submodules for your mod, and is an **[EventHandler](/external-EventHandler.html)**. You can ignore this, but it's reccomended to use it to give information to other mods and allow them to

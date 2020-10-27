@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>UPI Tutorial: Getting Started</title>
+	<title>UPI Externals</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -40,7 +40,7 @@
 			<li class="dropdown">
 				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="tutorial-creating-moduals.html">creating-moduals</a></li><li><a href="tutorial-gettingStarted.html">Getting Started</a></li>
+					<li><a href="tutorial-gettingStarted.html">Getting Started</a></li>
 				</ul>
 			</li>
 			
@@ -74,48 +74,113 @@
 <div class="row">
 
 	
-	<div class="col-md-12">
+	<div class="col-md-8">
 	
 		<div id="main">
-			<section class="tutorial-section">
+			
+
+	<h1 class="page-title">Externals</h1>
+<section>
 
 <header>
     
-
-    <h2>Getting Started</h2>
+        <h2>
+        
+        </h2>
+        
+    
 </header>
 
+
 <article>
-    <h1>Getting Started</h1>
-<p>To get started you need to first require UPI in your userscript header</p>
-<pre class="prettyprint source lang-js"><code>// @require      https://cdn.jsdelivr.net/gh/boxcrittersmods/UPI@latest/dist/UPI.min.js
-</code></pre>
-<p>Once you have done that you will also need to setup the configoration of UPI also in the userscript header. (<code>.abbrev</code> is optional)</p>
-<pre class="prettyprint source lang-js"><code>// UPI.id        simpleMod
-// UPI.abbrev    SM
-</code></pre>
-<h2>Global Vriables</h2>
-<p>once you have done all that you will then be treated to 3 global variables</p>
-<ul>
-<li><code>UPI</code> - This entire library</li>
-<li><code>uWindow</code> - a reliable refererence to the window object that deals with things like <code>@grant none</code></li>
-<li><code>mod</code> - this object represents your mod/modual and it also acts like the <code>module.exports</code> from node.js where what ever you assign to it, any mods that depend on your modual will be able to access.</li>
-</ul>
-<h2>Dependencies</h2>
-<p>want to use an bc modding api that someone else made.
-add this to your userscript header</p>
-<pre class="prettyprint source lang-js"><code>// UPI.deps      [modIds]
-</code></pre>
-<p><code>modIDs</code>  - a comma sepperated list of the ids of mods you would like to depend on</p>
+    <div class="container-overview">
+    
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="Module.html">Module</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 </article>
 
 </section>
+
+
+
 
 		</div>
 	</div>
 
 	<div class="clearfix"></div>
 
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
 	
 
 </div>

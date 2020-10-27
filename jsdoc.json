@@ -3,8 +3,7 @@
 		"destination":"docs",
 		"tutorials":"./tutorials",
 		"readme":"README.md",
-		"template":"./node_modules/ink-docstrap/template",
-		"package":"./package.json"
+		"template":"./node_modules/ink-docstrap/template"
 	},
 	"plugins":["plugins/markdown"],
 	"templates":{

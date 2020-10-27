@@ -1,4 +1,3 @@
-# UPI
 - **U**nited
 - **P**rogram
 - **I**nterface
