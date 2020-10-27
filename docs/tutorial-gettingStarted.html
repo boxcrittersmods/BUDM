@@ -89,7 +89,7 @@
     <p>This tutorial assumes you are making a mod, if you are making a module, the process is still the same.</p>
 <h3>Setup</h3>
 <p>To set up UPI, require it in your userscript header</p>
-<pre class="prettyprint source lang-js"><code>// @require      https://cdn.jsdelivr.net/gh/boxcrittersmods/UPI@latest/dist/UPI.min.js
+<pre class="prettyprint source lang-js"><code>// @require      https://github.com/boxcrittersmods/UPI/raw/master/dist/UPI.min.js
 </code></pre>
 <h3>Configuration</h3>
 <p>Configuration is done by adding parameters in the userscript header.
@@ -108,7 +108,7 @@ By default all options are automatically filled out.</p>
 <ul>
 <li><em><a href="/Module.html">Module</a></em> <code>UPI</code> - The entire UPI library.</li>
 <li><em><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window">Window</a></em> <code>uWindow</code> - a reliable refererence to the window object (to deal with userscript sandboxing)</li>
-<li><em><a href="/Module.html">Module</a></em> <code>mod</code> - This object represents your mod, it's the way all other mods/modules access your mod. It contains information about your mod, any submodules for your mod, and is an <strong><a href="/external-EventHandler.html">EventHandler</a></strong>. You can ignore this, but it's reccomended to use it to give information to other mods and allow them to</li>
+<li><em><a href="/Module.html">Module</a></em> <code>mod</code> - This object represents your mod, it's the way all other mods/modules access your mod. It contains information about your mod, any submodules for your mod, and is an <strong><a href="/external-EventHandler.html">EventHandler</a></strong>. You can ignore this, but it's reccomended to use it to give information to other mods and allow them to do things with your mod.</li>
 </ul>
 </article>
 
