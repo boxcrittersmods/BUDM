@@ -1,13 +1,26 @@
-class Module extends EventHandler { // TODO: get EventHandler from my github so it can be compiled into this
+/**
+ * @file Module Class
+ * @author TumbleGamer SArpnt
+ * @copyright 2020 The Box Critters Modding Community
+ * @licence Apache-2.0
+ */
+/**
+ * @external EventHandler
+ * @see {@link https://github.com/SArpnt/EventHandler}
+ */
+/**
+ * Module class
+ * @class
+ * @extends EventHandler
+ */
+class Module extends EventHandler {
 	/**
 	 * Creates a new Module
-	 * @tutorial creating-moduals
 	 * @param {Object} options
-
 	 * @param {Module} [options.parent] Parent of the module
 	 * @param {String} [options.GM_info] GM_info for the module
 	 * @param {String} [options.scriptSource] The script for the module
-	 * @param {Object} [options.overrides]
+	 * @param {Object} [options.overrides] Override any part of modInfo
 	 * @param {String} options.overrides.name Name of the module
 	 * @param {String} [options.overrides.author] Author of the module
 	 * @param {String} [options.overrides.version] Version of the module - optional unless global (global is a flag that will be added later)
@@ -31,21 +44,20 @@ class Module extends EventHandler { // TODO: get EventHandler from my github so 
 			this.modInfo.GM_info = GM_info;
 
 			if (!this.modInfo.scriptSource) this.modInfo.scriptSource = GM_info.scriptSource;
-			if (!this.modInfo.name) this.modInfo.name = this.modInfo.GM_info.script.name;
-			if (!this.modInfo.version) this.modInfo.version = this.modInfo.GM_info.script.version;
 		}
 
-		if (scriptSource) {
+		if (this.modInfo.scriptSource) {
 			this.modInfo.header = Module.parseScriptHeader(this.modInfo.scriptSource);
 
 			this.modInfo.name = this.modInfo.header.name;
 			this.modInfo.author = this.modInfo.header.author;
 			this.modInfo.version = this.modInfo.header.version;
 
-			this.modInfo.id = this.modInfo.header.UPI.id;
-			this.modInfo.abbrev = this.modInfo.header.UPI.abbrev;
-			if (this.modInfo.header.UPI.deps)
-				this.modInfo.deps = this.modInfo.header.UPI.deps.split(/\s*,\s*/);
+			if (this.modInfo.header.UPI) {
+				this.modInfo.id = this.modInfo.header.UPI.id;
+				this.modInfo.abbrev = this.modInfo.header.UPI.abbrev;
+				this.modInfo.deps = this.modInfo.header.UPI.deps.split(/\s*,\s*/).filter(e => e);
+			}
 		} else
 			if (!overrides) throw `No Script Source!`;
 
@@ -89,7 +101,11 @@ class Module extends EventHandler { // TODO: get EventHandler from my github so 
 			return index === 0 ? match.toLowerCase() : match.toUpperCase();
 		});
 	}
-
+	/**
+	 * parses a scriprs header
+	 * @private
+	 * @param {String} scriptText Script text to parse
+	 */
 	static parseScriptHeader(scriptText) {
 		let arrayForm = scriptText
 			.match(/(?:\/\/\s*)?==UserScript==([\S\s]*)==\/UserScript==/)[1] // get header
@@ -104,22 +120,34 @@ class Module extends EventHandler { // TODO: get EventHandler from my github so 
 				];
 			});
 
-		mod.debug(`header arrayForm:`, arrayForm);
+		console.debug(`header arrayForm:`, arrayForm);
 
 		let objForm = {};
 		for (let [path, v] of arrayForm) {
-			let fKey = path.pop(),
-				cObj = objForm;
-			for (let b of path) {
-				if (b in cObj && typeof cObj[b] != "object")
-					throw `Path ${path.join('.')} has existing value at ${b}`;
-				cObj = cObj[b];
+			let fKey = path.pop();
+			if (fKey[0] == '@' && !path.length) {
+				let k = fKey.slice(1);
+				if (k in objForm)
+					if (Array.isArray(objForm[k]))
+						objForm[k].push(v);
+					else
+						throw `Value ${k} already exists`;
+				else
+					objForm[k] = [v];
+			} else {
+				let cObj = objForm;
+				for (let b of path) {
+					if (b in cObj && typeof cObj[b] != "object")
+						throw `Path ${path.join('.')} has existing value at ${b}`;
+					cObj = cObj[b];
+				}
+				if (fKey in cObj)
+					throw `Value ${path.join('.')}.${fKey} already exists`;
+				cObj[fKey] = v;
 			}
-			if (fKey in cObj)
-				throw `Value ${path.join('.')}.${key} already exists`;
-			cObj[fKey] = v;
 		}
-		return mod.debug(`header objForm:`, objForm);
+		console.debug(`header objForm:`, objForm);
+		return objForm;
 	}
 };
 

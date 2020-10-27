@@ -1,0 +1,31 @@
+<html>
+<head>
+</head>
+<body style="background: transparent;">
+    <script src="scripts/docstrap.lib.js"></script>
+    <script src="scripts/lunr.min.js"></script>
+    <script src="scripts/fulltext-search.js"></script>
+
+    <script type="text/x-docstrap-searchdb">
+    {"modules.list.html":{"id":"modules.list.html","title":"Modules","body":" UPI Modules UPI Classes Module Tutorials Getting Started Externals EventHandler Modules Classes Module × Search results Close "},"classes.list.html":{"id":"classes.list.html","title":"Classes","body":" UPI Modules UPI Classes Module Tutorials Getting Started Externals EventHandler Classes Classes Module × Search results Close "},"externals.list.html":{"id":"externals.list.html","title":"Externals","body":" UPI Modules UPI Classes Module Tutorials Getting Started Externals EventHandler Externals Classes Module × Search results Close "},"tutorials.list.html":{"id":"tutorials.list.html","title":"Tutorials","body":" UPI Modules UPI Classes Module Tutorials Getting Started Externals EventHandler Tutorials Classes Module × Search results Close "},"index.html":{"id":"index.html","title":"Index","body":" UPI Modules UPI Classes Module Tutorials Getting Started Externals EventHandler bc-upi 0.0.1 UPI United Program Interface This is a new project created by @SArpnt and @tumble1999 combining the features of Cardboard and ModUtils and adding its own features like a unified modular dynamic dependacy system. Getting Started Index Module.js Module Class Author: TumbleGamer SArpnt Copyright: 2020 The Box Critters Modding Community × Search results Close "},"external-EventHandler.html":{"id":"external-EventHandler.html","title":"External: EventHandler","body":" UPI Modules UPI Classes Module Tutorials Getting Started Externals EventHandler External: EventHandler EventHandler See: https://github.com/SArpnt/EventHandler × Search results Close "},"Module.html":{"id":"Module.html","title":"Class: Module","body":" UPI Modules UPI Classes Module Tutorials Getting Started Externals EventHandler Class: Module Module Module class new Module(options) Creates a new Module Parameters: Name Type Description options Object Properties Name Type Argument Description parent Module &lt;optional&gt; Parent of the module GM_info String &lt;optional&gt; GM_info for the module scriptSource String &lt;optional&gt; The script for the module overrides Object &lt;optional&gt; Override any part of modInfo Properties Name Type Argument Description name String Name of the module author String &lt;optional&gt; Author of the module version String &lt;optional&gt; Version of the module - optional unless global (global is a flag that will be added later) id String ID of the module - optional but reccomended abbrev String &lt;optional&gt; Abbreviation of the module - optional but reccomended Extends EventHandler Methods &lt;static&gt; camelize(str) Camelizes a string Parameters: Name Type Description str String String to camelize debug(p) Replacement for console.debug Parameters: Name Type Description p String | * error(p) Replacement for console.error Parameters: Name Type Description p String | * info(p) Replacement for console.info Parameters: Name Type Description p String | * log(p) Replacement for console.log, usually not reccomended, use debug, info, warn, or error Parameters: Name Type Description p String | * warn(p) Replacement for console.warn Parameters: Name Type Description p String | * × Search results Close "},"module-UPI.html":{"id":"module-UPI.html","title":"Module: UPI","body":" UPI Modules UPI Classes Module Tutorials Getting Started Externals EventHandler Module: UPI × Search results Close "},"tutorial-gettingStarted.html":{"id":"tutorial-gettingStarted.html","title":"Tutorial: Getting Started","body":" UPI Modules UPI Classes Module Tutorials Getting Started Externals EventHandler How to create and manage Modules Getting Started Getting Started To get started you need to first require UPI in your userscript header // @require https://cdn.jsdelivr.net/gh/boxcrittersmods/UPI@latest/dist/UPI.min.js Once you have done that you will also need to setup the configoration of UPI also in the userscript header. (.abbrev is optional) // UPI.id simpleMod // UPI.abbrev SM Then you'll need to decide weather you want to create a module or a mod creating-modules creating-mods × Search results Close "},"tutorial-creating-moduals.html":{"id":"tutorial-creating-moduals.html","title":"Tutorial: How to create and manage Modules","body":" UPI Modules UPI Classes Module Tutorials Getting Started Externals EventHandler How to create and manage Modules You create a × Search results Close "}}
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Searcher.init();
+        });
+
+        $(window).on("message", function(msg) {
+            var msgData = msg.originalEvent.data;
+
+            if (msgData.msgid != "docstrap.quicksearch.start") {
+                return;
+            }
+
+            var results = Searcher.search(msgData.searchTerms);
+
+            window.parent.postMessage({"results": results, "msgid": "docstrap.quicksearch.done"}, "*");
+        });
+    </script>
+</body>
+</html>
