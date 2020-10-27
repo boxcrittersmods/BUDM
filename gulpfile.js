@@ -7,34 +7,48 @@ const gulp = require("gulp"),
 	fs = require("fs"),
 	fetch = require('sync-fetch'),
 
+	//upiVersion = require("./package.json").version,
+
 	startingFile = "src/index.js",
 	distFolder = "dist",
 
-	includeRegex = /(?<=^([ \t]*).*?)\/\*@\s+(url\s+)?(.*?)\s+@\*\//gm,
-	minIncludeRegex = /(?<=^([ \t]*).*?)\/\*@min\s+(url\s+)?(.*?)\s+@\*\//gm,
-	includeFunc = function (match, indent, url, path) {
+	includeRegex = /(?<=^([ \t]*).*?)\/\*@(\w*)\s+(?:(url|code)\s+)?(.*?)\s+@\*\//gm,
+	includeFunc = function (file, original, indent, loc, txtType, path) {
+		console.log(`"${file}"`, `"${original}"`, `"${indent}"`, `"${loc}"`, `"${txtType}"`, `"${path}"`);
+		if (loc && loc != file)
+			return file ? '' : original;
 		let txt;
-		if (url)
+		if (txtType == "url")
 			txt = fetch(path).text();
+		else if (txtType == "code")
+			txt = path.slice(2, -2);
 		else
 			txt = fs.readFileSync(`src/${path}`, "utf8");
 		return txt
-			.replace(includeRegex, includeFunc)
+			.replace(includeRegex, (...a) => includeFunc(file, ...a))
 			.replace(/\n/g, `\n${indent}`);
 	},
 
-	buildJS = function () {
+	build = function () {
 		return gulp.src([startingFile])
 			//.pipe(plumber()) // fixes issue with node streams piping
-			.pipe(replace(includeRegex, includeFunc))
+			.pipe(replace(includeRegex, (...a) => includeFunc(null, ...a)));
+	},
+	buildUser = function () {
+		return build()
+			.pipe(replace(includeRegex, (...a) => includeFunc('user', ...a)))
 			.pipe(rename("UPI.user.js"))
-			.pipe(gulp.dest(distFolder)) // outputs
-			.pipe(replace(minIncludeRegex, includeFunc))
-			.pipe(terser({
-				warnings: "verbose",
-			})) // minifies
+			.pipe(gulp.dest(distFolder));
+	},
+	buildMin = function () {
+		return build()
+			.pipe(replace(includeRegex, (...a) => includeFunc('min', ...a)))
+			.pipe(terser({ warnings: "verbose" })) // minify
 			.pipe(rename("UPI.min.js"))
 			.pipe(gulp.dest(distFolder));
 	};
 
-gulp.task("build", buildJS);
+
+gulp.task("build-user", buildUser);
+gulp.task("build-min", buildMin);
+gulp.task("build", gulp.series("build-user", "build-min"));

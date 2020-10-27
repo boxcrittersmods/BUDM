@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"description": "United Program Interface",
 	"scripts": {
-		"docs": "jsdoc -c jsdoc.json -R README.md -t ./node_modules/ink-docstrap/template -u ./tutorials",
+		"docs": "jsdoc -c jsdoc.json",
 		"build": "gulp build"
 	},
 	"author": "tumble1999,SArpnt",

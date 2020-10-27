@@ -1,7 +1,7 @@
 class Module extends EventHandler { // TODO: get EventHandler from my github so it can be compiled into this
 	/**
 	 * Creates a new Module
-	 * @tutorial testtutorial
+	 * @tutorial creating-moduals
 	 * @param {Object} options
 
 	 * @param {Module} [options.parent] Parent of the module
@@ -19,10 +19,8 @@ class Module extends EventHandler { // TODO: get EventHandler from my github so 
 
 		this.modInfo = {};
 
-		if (this.parent) // if no value key isn't set
-			this.parent = parent;
-
-		this.modInfo.scriptSource = scriptSource;
+		if (parent) this.parent = parent;
+		if (scriptSource) this.modInfo.scriptSource = scriptSource;
 
 		if (GM_info) {
 			if (typeof GM_info != "object")
@@ -34,7 +32,7 @@ class Module extends EventHandler { // TODO: get EventHandler from my github so 
 
 			if (!this.modInfo.scriptSource) this.modInfo.scriptSource = GM_info.scriptSource;
 			if (!this.modInfo.name) this.modInfo.name = this.modInfo.GM_info.script.name;
-			if (!this.modInfo.version) this.modInfo.version = this.modInfo.GM_info.script.name;
+			if (!this.modInfo.version) this.modInfo.version = this.modInfo.GM_info.script.version;
 		}
 
 		if (scriptSource) {
@@ -65,7 +63,7 @@ class Module extends EventHandler { // TODO: get EventHandler from my github so 
 				.split(" ")
 				.map(word => word[0].toUpperCase())
 				.join("");
-		this.modInfo.depsLoaded = !this.modInfo.deps
+		this.modInfo.depsLoaded = !this.modInfo.deps;
 
 		if (this.parent) {
 			this.parent[this.modInfo.id] = this;
