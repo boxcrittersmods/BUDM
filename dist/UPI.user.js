@@ -49,6 +49,7 @@ let UPI;
 	class Module extends EventHandler { // TODO: get EventHandler from my github so it can be compiled into this
 		/**
 		 * Creates a new Module
+		 * @tutorial testtutorial
 		 * @param {Object} options
 	
 		 * @param {Module} [options.parent] Parent of the module
@@ -93,8 +94,8 @@ let UPI;
 	
 				this.modInfo.id = this.modInfo.header.UPI.id;
 				this.modInfo.abbrev = this.modInfo.header.UPI.abbrev;
-				if (this.modInfo.header.UPI.require)
-					this.modInfo.require = this.modInfo.header.UPI.require.split(/\s*,\s*/);
+				if (this.modInfo.header.UPI.deps)
+					this.modInfo.deps = this.modInfo.header.UPI.deps.split(/\s*,\s*/);
 			} else
 				if (!overrides) throw `No Script Source!`;
 	
@@ -112,6 +113,7 @@ let UPI;
 					.split(" ")
 					.map(word => word[0].toUpperCase())
 					.join("");
+			this.modInfo.depsLoaded = !this.modInfo.deps
 	
 			if (this.parent) {
 				this.parent[this.modInfo.id] = this;
@@ -123,6 +125,8 @@ let UPI;
 			}
 	
 			this.info(this.modInfo.name + (this.modInfo.author ? ` by ${this.modInfo.author}` : ``));
+	
+			if (this.parent) this.parent.emit('submoduleLoaded', this);
 		}
 	
 		/**
@@ -230,7 +234,7 @@ let UPI;
 
 	/**
 	 * TODO:
-	 * handle requirements
-	 * handle userscript
+	 * create userscript module
+	 * handle deps
 	 */
 })();
