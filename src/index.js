@@ -39,7 +39,7 @@ let UPI;
 
 	/**
 	 * TODO:
-	 * handle requirements
-	 * handle userscript
+	 * create userscript module
+	 * handle deps
 	 */
 })();
