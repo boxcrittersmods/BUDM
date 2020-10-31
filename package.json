@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"description": "United Program Interface",
 	"scripts": {
-		"docs": "jsdoc -c jsdoc.json&&echo upi.boxcrittermods.ga>docs/CNAME",
+		"docs": "jsdoc -c jsdoc.json&&echo upi.boxcrittersmods.ga>docs/CNAME",
 		"build": "gulp build"
 	},
 	"author": "tumble1999,SArpnt",
