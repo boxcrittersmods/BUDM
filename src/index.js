@@ -35,7 +35,7 @@ let UPI;
 	/*@ Module.js @*/
 
 	UPI = new Module/*@ UPIModuleInfo.js @*/;
-	UPI.info(UPI);
+	UPI.debug(`Created root module:`, UPI);
 
 	/**
 	 * TODO:
