@@ -1,26 +1,26 @@
 /*@ header.js @*/
 
 const uWindow = typeof unsafeWindow != 'undefined' ? unsafeWindow : window;
-let UPI;
+let BUDM;
 (function () {
 	"use strict";
 	let exposedVars = {
 		uWindow,
-		UPI,
+		BUDM,
 	};
 
-	if (window.UPI) {
+	if (window.BUDM) {
 		for (let i in exposedVars)
 			delete window[i];
-		throw `UPI variables are global! please scope/sandbox it`;
+		throw `BUDM variables are global! please scope/sandbox it`;
 	}
 
 	// Module class structure
 	({
 		modInfo: {
-			name: "Universal Program Interface",
-			id: "UPI",
-			abbrev: "UPI",
+			name: "Boxcritters Userscript Dependency Manager",
+			id: "BUDM",
+			abbrev: "BUDM",
 		},
 		exampleSubmodule: { // mods can also be modules
 			modInfo: {
@@ -34,8 +34,8 @@ let UPI;
 	/*@min url https://github.com/SArpnt/EventHandler/raw/master/script.js @*/
 	/*@ Module.js @*/
 
-	UPI = new Module/*@ UPIModuleInfo.js @*/;
-	UPI.debug(`Created root module:`, UPI);
+	BUDM = new Module/*@ BUDMModuleInfo.js @*/;
+	BUDM.debug(`Created root module:`, BUDM);
 
 	/**
 	 * TODO:

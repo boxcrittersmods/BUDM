@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>UPI Tutorial: Getting Started</title>
+	<title>BUDM Tutorial: Getting Started</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +20,7 @@
 <div class="navbar navbar-default navbar-fixed-top ">
 <div class="container">
 	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html">UPI</a>
+		<a class="navbar-brand" href="index.html">BUDM</a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
@@ -86,17 +86,17 @@
 </header>
 
 <article>
-    <p>This tutorial assumes you are making a mod, if you are making a module, the process is still the same.</p>
+    <p>This tutorial assumes you are making a mod, however it's the same process for a module.</p>
 <h3>Setup</h3>
-<p>To set up UPI, require it in your userscript header</p>
-<pre class="prettyprint source lang-js"><code>// @require      https://github.com/boxcrittersmods/UPI/raw/master/dist/UPI.min.js
+<p>To set up BUDM, require it in your userscript header</p>
+<pre class="prettyprint source lang-js"><code>// @require      https://github.com/boxcrittersmods/BUDM/raw/master/dist/BUDM.min.js
 </code></pre>
 <h3>Configuration</h3>
 <p>Configuration is done by adding parameters in the userscript header.
 By default all options are automatically filled out.</p>
-<pre class="prettyprint source lang-js"><code>// UPI.id        exampleMod
-// UPI.abbrev    EM
-// UPI.deps      moduleOne, moduleTwo, moduleThree
+<pre class="prettyprint source lang-js"><code>// BUDM.id        exampleMod
+// BUDM.abbrev    EM
+// BUDM.deps      moduleOne, moduleTwo, moduleThree
 </code></pre>
 <ul>
 <li><code>.id</code> - The name of your mod in camelText</li>
@@ -104,9 +104,9 @@ By default all options are automatically filled out.</p>
 <li><code>.deps</code> - A list of the modules neccecary for your mod</li>
 </ul>
 <h3>Usage</h3>
-<p>These variables are used to interface with UPI:</p>
+<p>These variables are used to interface with BUDM:</p>
 <ul>
-<li><em><a href="/Module.html">Module</a></em> <code>UPI</code> - The entire UPI library.</li>
+<li><em><a href="/Module.html">Module</a></em> <code>BUDM</code> - The entire BUDM library.</li>
 <li><em><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window">Window</a></em> <code>uWindow</code> - a reliable refererence to the window object (to deal with userscript sandboxing)</li>
 <li><em><a href="/Module.html">Module</a></em> <code>mod</code> - This object represents your mod, it's the way all other mods/modules access your mod. It contains information about your mod, any submodules for your mod, and is an <strong><a href="/external-EventHandler.html">EventHandler</a></strong>. You can ignore this, but it's reccomended to use it to give information to other mods and allow them to do things with your mod.</li>
 </ul>

@@ -2,7 +2,7 @@ no window with globalish let
 data stored in userscript header / similar header
 module loading
 everything is modules and modules can contain more modules
-log giving [UPI > module > submodule]
+log giving [BUDM > module > submodule]
 make contained modules the same as userscripts so they can be installed by themselves
 modules can either load and only be for individual userscripts or they can be global and have some kind of version handling
 
@@ -10,7 +10,7 @@ Mod <-> Module?
 
 nodejs Module wrapper
 
-hopefully every boxcritters api joins the upi family
+hopefully every boxcritters api joins the BUDM family
 
 
 RegisterMod
@@ -22,5 +22,5 @@ RegisterMod
 });
 
 In there begining there was nothing
-Then there was UPI
-then upi created x amount of the core APIS
+Then there was BUDM
+then BUDM created x amount of the core APIS

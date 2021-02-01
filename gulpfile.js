@@ -7,7 +7,7 @@ const gulp = require("gulp"),
 	fs = require("fs"),
 	fetch = require('sync-fetch'),
 
-	//upiVersion = require("./package.json").version,
+	//budmVersion = require("./package.json").version,
 
 	startingFile = "src/index.js",
 	distFolder = "dist",
@@ -37,14 +37,14 @@ const gulp = require("gulp"),
 	buildUser = function () {
 		return build()
 			.pipe(replace(includeRegex, (...a) => includeFunc('user', ...a)))
-			.pipe(rename("UPI.user.js"))
+			.pipe(rename("BUDM.user.js"))
 			.pipe(gulp.dest(distFolder));
 	},
 	buildMin = function () {
 		return build()
 			.pipe(replace(includeRegex, (...a) => includeFunc('min', ...a)))
 			.pipe(terser({ warnings: "verbose" })) // minify
-			.pipe(rename("UPI.min.js"))
+			.pipe(rename("BUDM.min.js"))
 			.pipe(gulp.dest(distFolder));
 	};
 

@@ -37,7 +37,7 @@ class Module extends EventHandler {
 
 		if (GM_info) {
 			if (typeof GM_info != "object")
-				throw new TypeError(`Invalid GM_info!`); // TODO: proper error handling (doesn't break all of UPI)
+				throw new TypeError(`Invalid GM_info!`); // TODO: proper error handling (doesn't break all of BUDM)
 			if (!GM_info)
 				throw new TypeError(`Invalid GM_info!`);
 
@@ -53,10 +53,10 @@ class Module extends EventHandler {
 			this.modInfo.author = this.modInfo.header.author;
 			this.modInfo.version = this.modInfo.header.version;
 
-			if (this.modInfo.header.UPI) {
-				this.modInfo.id = this.modInfo.header.UPI.id;
-				this.modInfo.abbrev = this.modInfo.header.UPI.abbrev;
-				this.modInfo.deps = this.modInfo.header.UPI.deps.split(/\s*,\s*/).filter(e => e);
+			if (this.modInfo.header.BUDM) {
+				this.modInfo.id = this.modInfo.header.BUDM.id;
+				this.modInfo.abbrev = this.modInfo.header.BUDM.abbrev;
+				this.modInfo.deps = this.modInfo.header.BUDM.deps.split(/\s*,\s*/).filter(e => e);
 			}
 		} else
 			if (!overrides) throw `No Script Source!`;

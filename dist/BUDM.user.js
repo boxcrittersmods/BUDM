@@ -1,13 +1,8 @@
 // ==UserScript==
-// @name         United Program Interface
+// @name         Boxcritters Userscript Dependency Manager
 // @author       SArpnt and TumbleGamer
 // @supportURL   http://discord.gg/D2ZpRUW
-// @match        https://boxcritters.com/play/
-// @match        https://boxcritters.com/play/?*
-// @match        https://boxcritters.com/play/#*
-// @match        https://boxcritters.com/play/index.html
-// @match        https://boxcritters.com/play/index.html?*
-// @match        https://boxcritters.com/play/index.html#*
+// @include      /^https:\/\/boxcritters\.com\/play\/(index\.html)?([\?#].*)?$/
 // @run-at       document-start
 // @require      https://github.com/SArpnt/EventHandler/raw/master/script.js
 // ==/UserScript==
@@ -15,26 +10,26 @@
 // TODO
 
 const uWindow = typeof unsafeWindow != 'undefined' ? unsafeWindow : window;
-let UPI;
+let BUDM;
 (function () {
 	"use strict";
 	let exposedVars = {
 		uWindow,
-		UPI,
+		BUDM,
 	};
 
-	if (window.UPI) {
+	if (window.BUDM) {
 		for (let i in exposedVars)
 			delete window[i];
-		throw `UPI variables are global! please scope/sandbox it`;
+		throw `BUDM variables are global! please scope/sandbox it`;
 	}
 
 	// Module class structure
 	({
 		modInfo: {
-			name: "Universal Program Interface",
-			id: "UPI",
-			abbrev: "UPI",
+			name: "Boxcritters Userscript Dependency Manager",
+			id: "BUDM",
+			abbrev: "BUDM",
 		},
 		exampleSubmodule: { // mods can also be modules
 			modInfo: {
@@ -85,7 +80,7 @@ let UPI;
 	
 			if (GM_info) {
 				if (typeof GM_info != "object")
-					throw new TypeError(`Invalid GM_info!`); // TODO: proper error handling (doesn't break all of UPI)
+					throw new TypeError(`Invalid GM_info!`); // TODO: proper error handling (doesn't break all of BUDM)
 				if (!GM_info)
 					throw new TypeError(`Invalid GM_info!`);
 	
@@ -101,10 +96,10 @@ let UPI;
 				this.modInfo.author = this.modInfo.header.author;
 				this.modInfo.version = this.modInfo.header.version;
 	
-				if (this.modInfo.header.UPI) {
-					this.modInfo.id = this.modInfo.header.UPI.id;
-					this.modInfo.abbrev = this.modInfo.header.UPI.abbrev;
-					this.modInfo.deps = this.modInfo.header.UPI.deps.split(/\s*,\s*/).filter(e => e);
+				if (this.modInfo.header.BUDM) {
+					this.modInfo.id = this.modInfo.header.BUDM.id;
+					this.modInfo.abbrev = this.modInfo.header.BUDM.abbrev;
+					this.modInfo.deps = this.modInfo.header.BUDM.deps.split(/\s*,\s*/).filter(e => e);
 				}
 			} else
 				if (!overrides) throw `No Script Source!`;
@@ -250,17 +245,17 @@ let UPI;
 		}
 	);
 
-	UPI = new Module({
+	BUDM = new Module({
 		GM_info,
 		overrides: {
-			name: "United Program Interface",
+			name: "Boxcritters Userscript Dependency Manager",
 			author: "SArpnt and TumbleGamer",
 			//version: , // TODO
-			id: "UPI",
-			abbrev: "UPI",
+			id: "BUDM",
+			abbrev: "BUDM",
 		}
 	});
-	UPI.info(UPI);
+	BUDM.debug(`Created root module:`, BUDM);
 
 	/**
 	 * TODO:

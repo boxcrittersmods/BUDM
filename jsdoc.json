@@ -1,19 +1,23 @@
 {
 	"opts": {
-		"destination":"docs",
-		"tutorials":"./tutorials",
-		"readme":"README.md",
-		"template":"./node_modules/ink-docstrap/template"
+		"destination": "docs",
+		"tutorials": "./tutorials",
+		"readme": "README.md",
+		"template": "./node_modules/ink-docstrap/template"
 	},
-	"plugins":["plugins/markdown"],
-	"templates":{
-		"systemName":"UPI",
-		"copyright":"Copyright 2019-<script>document.write(new Date().getFullYear());</script> The Box Critters Modding Community.",
-		"search":true,
-		"includeDate":false
+	"plugins": [
+		"plugins/markdown"
+	],
+	"templates": {
+		"systemName": "BUDM",
+		"copyright": "Copyright 2019-<script>document.write(new Date().getFullYear());</script> The Box Critters Modding Community.",
+		"search": true,
+		"includeDate": false
 	},
 	"source": {
-		"include": ["src"],
+		"include": [
+			"src"
+		],
 		"includePattern": ".+\\.(m|c)?js(doc|x)?$"
 	}
 }
