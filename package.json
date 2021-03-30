@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"description": "Boxcritters Userscript Dependency Manager",
 	"scripts": {
-		"docs": "jsdoc -c jsdoc.json&&echo budm.boxcrittersmods.ga>docs/CNAME",
+		"docs": "jsdoc -c jsdoc.json&&echo budm.bcmc.ga>docs/CNAME",
 		"build": "gulp build"
 	},
 	"author": "tumble1999,SArpnt",

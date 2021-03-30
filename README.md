@@ -9,7 +9,7 @@
 
 This is a new project created by @SArpnt and @tumble1999 combining the features of [Cardboard] and [ModUtils] and adding its own features like a unified modular dynamic dependency system.
 
-[Getting Started](https://budm.boxcrittersmods.ga/tutorial-gettingStarted.html)
+[Getting Started](https://budm.bcmc.ga/tutorial-gettingStarted.html)
 
 ## How to build
 
